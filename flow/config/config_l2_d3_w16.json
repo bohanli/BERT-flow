@@ -1,0 +1,12 @@
+{
+    "latent_architecture": "glow_resnet",
+    "activation": "relu",
+    "coupling": "additive",
+    "coupling_width": 32,
+    "coupling_dropout": 0.0,
+    "top_prior": "normal",
+    "n_levels": 2,
+    "depth": 3,
+    "permutation": true,
+    "use_fp16": false
+}
