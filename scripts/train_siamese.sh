@@ -60,7 +60,7 @@ elif [[ $1 == "predict" ]];then
       ${@:2}
 
     python3 scripts/eval_stsb.py \
-        --glue_path="GLUE_DIR" \
+        --glue_path=${GLUE_DIR} \
         --task_name=${TASK_NAME} \
         --pred_path=${OUTPUT_PARENT_DIR}/${EXP_NAME}/test_results.tsv \
         --is_test=1
