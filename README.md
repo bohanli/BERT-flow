@@ -8,6 +8,9 @@ Bohan Li, Hao Zhou, Junxian He, Mingxuan Wang, Yiming Yang, Lei Li
 EMNLP 2020
 ```
 
+![Illustration][./bert-flow-pic.png]
+
+
 Model                                        | Spearman's rho 
 -------------------------------------------- | :-------------: 
 BERT-large-NLI                               | 77.80    
