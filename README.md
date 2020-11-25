@@ -1,5 +1,9 @@
 # On the Sentence Embeddings from Pre-trained Language Models
 
+<p align="center">
+<img src="img/bert-flow.png" width="450">
+</p>
+
 This is a TensorFlow implementation of the following [paper](https://arxiv.org/abs/2011.05864):
 
 ```
@@ -8,7 +12,6 @@ Bohan Li, Hao Zhou, Junxian He, Mingxuan Wang, Yiming Yang, Lei Li
 EMNLP 2020
 ```
 
-![Illustration][./bert-flow-pic.png]
 
 
 Model                                        | Spearman's rho 
