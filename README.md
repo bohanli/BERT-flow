@@ -133,7 +133,7 @@ bash scripts/train_siamese.sh predict \
  --use_full_for_training=1"
 ```
 
-### Fitting flow with only the training set of STS-B
+### Fit flow with only the training set of STS-B
 ```bash
 export CUDA_VISIBLE_DEVICES=0
 export TASK_NAME=STS-B
@@ -169,6 +169,9 @@ bash scripts/train_siamese.sh predict \
  --flow_learning_rate=1e-3 \
  --use_full_for_training=1"
 ```
+
+## Download our models
+Our models are available at https://drive.google.com/file/d/1-vO47t5SPFfzZPKkkhSe4tXhn8u--KLR/view?usp=sharing
 
 ## Reference
 
