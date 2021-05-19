@@ -28,7 +28,9 @@ Please contact bohanl1@cs.cmu.edu if you have any questions.
 ## Requirements
 
 * Python >= 3.6
-* TensorFlow >= 1.14
+* TensorFlow == 1.14 [tensorflow2 not working]
+* SciPy
+* Numpy == 1.19.5
 
 ## Preparation
 
@@ -41,8 +43,13 @@ mkdir ${BERT_PREMODELS}; cd ${BERT_PREMODELS}
 curl -O https://storage.googleapis.com/bert_models/2018_10_18/uncased_L-12_H-768_A-12.zip
 curl -O https://storage.googleapis.com/bert_models/2018_10_18/uncased_L-24_H-1024_A-16.zip
 
+unzip uncased_L-12_H-768_A-12.zip
+unzip uncased_L-24_H-1024_A-16.zip
+
 ls ${BERT_PREMODELS}/uncased_L-12_H-768_A-12 # base
 ls ${BERT_PREMODELS}/uncased_L-24_H-1024_A-16 # large
+
+cd ../BERT-flow
 ```
 
 ### GLUE
@@ -53,18 +60,24 @@ python download_glue_data.py --data_dir=${GLUE_DIR}
 # then download the labeled test set of STS-B
 cd ../glue_data/STS-B
 curl -O https://raw.githubusercontent.com/kawine/usif/master/STSBenchmark/sts-test.csv
+
+cd ../../BERT-flow
 ```
 
 ### SentEval
 ```bash
 cd ..
 git clone https://github.com/facebookresearch/SentEval
+cd BERT-flow
 ```
 
 ## Usage
 
 ### Fine-tune BERT with NLI supervision (optional)
 ```bash
+mkdir -p ../exp
+export BERT_PREMODELS="../bert_premodels"
+export GLUE_DIR="../glue_data"
 export OUTPUT_PARENT_DIR="../exp"
 export CACHED_DIR=${OUTPUT_PARENT_DIR}/cached_data
 mkdir ${CACHED_DIR}
@@ -83,10 +96,13 @@ bash scripts/train_siamese.sh train \
 
 
 # evaluation
+mkdir -p ../exp
 export RANDOM_SEED=1234
 export CUDA_VISIBLE_DEVICES=0
 export TASK_NAME=STS-B
 export BERT_NAME=large
+export BERT_PREMODELS="../bert_premodels"
+export GLUE_DIR="../glue_data"
 export OUTPUT_PARENT_DIR="../exp"
 export INIT_CKPT=${OUTPUT_PARENT_DIR}/exp_${BERT_NAME}_${RANDOM_SEED}/model.ckpt-60108
 export CACHED_DIR=${OUTPUT_PARENT_DIR}/cached_data
@@ -104,9 +120,12 @@ Note: You may want to add `--use_xla` to speed up the BERT fine-tuning.
 
 ### Unsupervised learning of flow-based generative models
 ```bash
+mkdir -p ../exp
 export CUDA_VISIBLE_DEVICES=0
 export TASK_NAME=STS-B
 export BERT_NAME=large
+export BERT_PREMODELS="../bert_premodels"
+export GLUE_DIR="../glue_data"
 export OUTPUT_PARENT_DIR="../exp"
 export INIT_CKPT=${OUTPUT_PARENT_DIR}/exp_large_1234/model.ckpt-60108
 export CACHED_DIR=${OUTPUT_PARENT_DIR}/cached_data
@@ -121,9 +140,12 @@ bash scripts/train_siamese.sh train \
  --use_full_for_training=1"
 
 # evaluation
+mkdir -p ../exp
 export CUDA_VISIBLE_DEVICES=0
 export TASK_NAME=STS-B
 export BERT_NAME=large
+export BERT_PREMODELS="../bert_premodels"
+export GLUE_DIR="../glue_data"
 export OUTPUT_PARENT_DIR="../exp"
 export INIT_CKPT=${OUTPUT_PARENT_DIR}/exp_large_1234/model.ckpt-60108
 export CACHED_DIR=${OUTPUT_PARENT_DIR}/cached_data
@@ -141,9 +163,12 @@ bash scripts/train_siamese.sh predict \
 
 ### Fit flow with only the training set of STS-B
 ```bash
+mkdir -p ../exp
 export CUDA_VISIBLE_DEVICES=0
 export TASK_NAME=STS-B
 export BERT_NAME=large
+export BERT_PREMODELS="../bert_premodels"
+export GLUE_DIR="../glue_data"
 export OUTPUT_PARENT_DIR="../exp"
 export INIT_CKPT=${OUTPUT_PARENT_DIR}/exp_large_1234/model.ckpt-60108
 export CACHED_DIR=${OUTPUT_PARENT_DIR}/cached_data
@@ -158,9 +183,12 @@ bash scripts/train_siamese.sh train \
  --use_full_for_training=0"
 
 # evaluation
+mkdir -p ../exp
 export CUDA_VISIBLE_DEVICES=0
 export TASK_NAME=STS-B
 export BERT_NAME=large
+export BERT_PREMODELS="../bert_premodels"
+export GLUE_DIR="../glue_data"
 export OUTPUT_PARENT_DIR="../exp"
 export INIT_CKPT=${OUTPUT_PARENT_DIR}/exp_large_1234/model.ckpt-60108
 export CACHED_DIR=${OUTPUT_PARENT_DIR}/cached_data
@@ -178,6 +206,7 @@ bash scripts/train_siamese.sh predict \
 
 ## Download our models
 Our models are available at https://drive.google.com/file/d/1-vO47t5SPFfzZPKkkhSe4tXhn8u--KLR/view?usp=sharing
+To use the models copy the two model folders to the folder ../exp (create it before if it does not exist)
 
 ## Reference
 
